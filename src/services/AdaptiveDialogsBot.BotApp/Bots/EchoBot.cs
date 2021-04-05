@@ -1,10 +1,6 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-//
-// Generated with Bot Builder V4 SDK Template for Visual Studio EchoBot v4.12.2
-
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Schema;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,7 +11,25 @@ namespace AdaptiveDialogsBot.BotApp.Bots
     {
         protected override async Task OnMessageActivityAsync(ITurnContext<IMessageActivity> turnContext, CancellationToken cancellationToken)
         {
-            var replyText = $"Echo: {turnContext.Activity.Text}";
+            string replyText;
+
+            if (turnContext.Activity.Text.Equals("Hello", StringComparison.OrdinalIgnoreCase))
+            {
+                var now = DateTime.Now.TimeOfDay;
+
+                var time = now < new TimeSpan(12, 0, 0)
+                    ? "morning"
+                    : now > new TimeSpan(19, 0, 0)
+                        ? "evening"
+                        : "afternoon";
+
+                replyText = "Good " + time;
+            }
+            else
+            {
+                replyText = $"Echo: {turnContext.Activity.Text}";
+            }
+
             await turnContext.SendActivityAsync(MessageFactory.Text(replyText, replyText), cancellationToken);
         }
 
