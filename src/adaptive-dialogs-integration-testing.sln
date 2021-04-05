@@ -7,7 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{16
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{3F9707DF-F1A8-4237-B03C-2C175605BB1C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdaptiveDialogsBot.BotApp", "services\AdaptiveDialogsBot.BotApp\AdaptiveDialogsBot.BotApp.csproj", "{594BFDAE-9E52-423D-A026-2BDA3B42B84C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdaptiveDialogsBot.BotApp", "services\AdaptiveDialogsBot.BotApp\AdaptiveDialogsBot.BotApp.csproj", "{594BFDAE-9E52-423D-A026-2BDA3B42B84C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdaptiveDialogBot.BotApp.IntegrationTests", "tests\AdaptiveDialogBot.BotApp.IntegrationTests\AdaptiveDialogBot.BotApp.IntegrationTests.csproj", "{82B21119-432C-4028-855C-EC38600418A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,12 +21,17 @@ Global
 		{594BFDAE-9E52-423D-A026-2BDA3B42B84C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{594BFDAE-9E52-423D-A026-2BDA3B42B84C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{594BFDAE-9E52-423D-A026-2BDA3B42B84C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82B21119-432C-4028-855C-EC38600418A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82B21119-432C-4028-855C-EC38600418A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82B21119-432C-4028-855C-EC38600418A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82B21119-432C-4028-855C-EC38600418A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{594BFDAE-9E52-423D-A026-2BDA3B42B84C} = {166F3979-3F51-46C2-9C7C-BEC489689D27}
+		{82B21119-432C-4028-855C-EC38600418A0} = {3F9707DF-F1A8-4237-B03C-2C175605BB1C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F10FCB5-02DA-4341-ABD7-B819F62CFAA7}
