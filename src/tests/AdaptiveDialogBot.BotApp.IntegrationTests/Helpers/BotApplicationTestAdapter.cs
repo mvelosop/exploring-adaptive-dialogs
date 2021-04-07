@@ -1,4 +1,5 @@
 ﻿using AdaptiveDialogsBot.BotApp;
+using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Adapters;
 using Microsoft.Bot.Builder.TraceExtensions;
 using Microsoft.Extensions.Logging;
@@ -8,9 +9,16 @@ namespace AdaptiveDialogBot.BotApp.IntegrationTests.Helpers
     public class BotApplicationTestAdapter : TestAdapter
     {
         public BotApplicationTestAdapter(
-            ILogger<BotApplicationTestAdapter> logger)
+            ILogger<BotApplicationTestAdapter> logger,
+            IStorage storage,
+            UserState userState,
+            ConversationState conversationState)
         {
             Use(new LoggingMiddleware());
+
+            this.UseStorage(storage);
+            this.UseBotState(userState);
+            this.UseBotState(conversationState);
 
             OnTurnError = async (turnContext, exception) =>
             {
