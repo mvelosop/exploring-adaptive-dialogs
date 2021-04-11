@@ -76,6 +76,48 @@ namespace AdaptiveDialogBot.BotApp.IntegrationTests.DialogBotTests
 
         }
 
+        [Fact]
+        public async Task Ask_for_the_user_name_on_greeting()
+        {
+            // Arrange -----------------
+            var testAdapter = GetService<TestAdapter>();
+            testAdapter.Locale = "en-us";
+
+            var dialogUnderTest = GetService<RootDialog>();
+            var testClient = new DialogTestClient(testAdapter, dialogUnderTest);
+
+            var conversationUpdate = Activity.CreateConversationUpdateActivity();
+            conversationUpdate.MembersAdded.Add(testAdapter.Conversation.User);
+
+            // Act ---------------------
+            var reply = await testClient.SendActivityAsync<IMessageActivity>(conversationUpdate as Activity);
+            reply.Text.Should().Be("Hello and welcome!");
+
+            reply = await testClient.SendActivityAsync<IMessageActivity>("Hello");
+            reply.Text.Should().BeOneOf(new[] {
+                "Good morning",
+                "Good afternoon",
+                "Good evening"
+            });
+
+            reply = testClient.GetNextReply<IMessageActivity>();
+            reply.Text.Should().Be("What's your name?");
+
+            reply = await testClient.SendActivityAsync<IMessageActivity>("Miguel");
+            reply.Text.Should().Be("Thanks Miguel 😊");
+
+            reply = await testClient.SendActivityAsync<IMessageActivity>("Hello");
+            reply.Text.Should().BeOneOf(new[] {
+                "Good morning Miguel",
+                "Good afternoon Miguel",
+                "Good evening Miguel"
+            });
+
+            // Assert ------------------
+            var userName = testClient.DialogContext.State.GetStringValue("conversation.userName");
+            userName.Should().Be("Miguel");
+        }
+
         private T GetService<T>() => _scope.ServiceProvider.GetRequiredService<T>();
 
         protected virtual void Dispose(bool disposing)

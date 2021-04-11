@@ -22,6 +22,8 @@ namespace AdaptiveDialogsBot.BotApp.Dialogs.RootDialog
             var templates = Templates.ParseFile(Path.Combine(dialogRoot, "RootDialog", "RootDialog.lg"));
             Generator = new TemplateEngineLanguageGenerator(templates);
 
+            Recognizer = new RootDialogRecognizer();
+
             Triggers = new List<OnCondition> {
                 new OnConversationUpdateActivity {
                     Actions = {
@@ -41,35 +43,37 @@ namespace AdaptiveDialogsBot.BotApp.Dialogs.RootDialog
 
                 new OnUnknownIntent {
                     Actions = {
-                        new IfCondition {
-                            Condition = "toLower(turn.activity.text) == 'hello'",
-
-                            Actions = {
-                                new CodeAction(async (dialogContext, options) =>
-                                {
-                                    var now = DateTime.Now.TimeOfDay;
-
-                                    var time = now < new TimeSpan(12, 0, 0)
-                                        ? "morning"
-                                        : now > new TimeSpan(19, 0, 0)
-                                            ? "evening"
-                                            : "afternoon";
-
-                                    dialogContext.State.SetValue("dialog.greetingTime", time);
-
-                                    return await dialogContext.EndDialogAsync(options);
-                                }),
-
-                                new SendActivity("${Greeting()}")
-                            },
-
-                            ElseActions = {
-                                new SendActivity("${Echo()}")
-                            }
-                        },
+                        new SendActivity("${Echo()}")
                     }
                 },
+
+                new OnIntent("Greeting") {
+                    Actions = {
+                        new CodeAction(async (dialogContext, options) =>
+                        {
+                            var now = DateTime.Now.TimeOfDay;
+
+                            var time = now < new TimeSpan(12, 0, 0)
+                                ? "morning"
+                                : now > new TimeSpan(19, 0, 0)
+                                    ? "evening"
+                                    : "afternoon";
+
+                            dialogContext.State.SetValue("dialog.greetingTime", time);
+
+                            return await dialogContext.EndDialogAsync(options);
+                        }),
+
+                        new SendActivity("${Greeting()}"),
+
+                        new BeginDialog(nameof(GreetingDialog)) {
+                            ResultProperty = "conversation.userName"
+                        },
+                    }
+                }
             };
+
+            Dialogs.Add(new GreetingDialog(hostEnvironment));
         }
     }
 }

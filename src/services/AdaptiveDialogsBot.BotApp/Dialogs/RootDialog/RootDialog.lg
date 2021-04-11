@@ -4,11 +4,11 @@
 # Greeting
 - SWITCH: ${dialog.greetingTime}
 - CASE: ${'morning'}
-    - Good morning
+    - Good morning ${conversation.userName}
 - CASE: ${'afternoon'}
-    - Good afternoon
+    - Good afternoon ${conversation.userName}
 - DEFAULT:
-    - Good evening
+    - Good evening ${conversation.userName}
 
 # Echo
 - Echo: ${turn.activity.text}
