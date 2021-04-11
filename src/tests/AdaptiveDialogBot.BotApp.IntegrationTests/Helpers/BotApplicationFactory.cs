@@ -29,7 +29,7 @@ namespace AdaptiveDialogBot.BotApp.IntegrationTests.EchoBotTests
 
             builder.ConfigureServices(services =>
             {
-                services.AddSingleton<TestAdapter, BotApplicationTestAdapter>();
+                services.AddScoped<TestAdapter, BotApplicationTestAdapter>();
             });
 
             return base.CreateHost(builder);
