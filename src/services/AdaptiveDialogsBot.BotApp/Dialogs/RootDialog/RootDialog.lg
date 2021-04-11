@@ -1,0 +1,14 @@
+# Welcome
+- Hello and welcome!
+
+# Greeting
+- SWITCH: ${dialog.greetingTime}
+- CASE: ${'morning'}
+    - Good morning
+- CASE: ${'afternoon'}
+    - Good afternoon
+- DEFAULT:
+    - Good evening
+
+# Echo
+- Echo: ${turn.activity.text}
